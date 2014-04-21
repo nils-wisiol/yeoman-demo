@@ -40,7 +40,7 @@ module.exports = function (grunt) {
       },
       jsTest: {
         files: ['test/spec/{,*/}*.js'],
-        tasks: ['newer:jshint:test', 'karma']
+        tasks: ['newer:jshint:test']
       },
       compass: {
         files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
@@ -367,8 +367,13 @@ module.exports = function (grunt) {
 
     // Test settings
     karma: {
-      unit: {
+      watch: {
+        configFile: 'karma.conf.js'
+      },
+      once: {
         configFile: 'karma.conf.js',
+        autoWatch: false,
+        usePolling: false,
         singleRun: true
       }
     }
@@ -400,7 +405,7 @@ module.exports = function (grunt) {
     'concurrent:test',
     'autoprefixer',
     'connect:test',
-    'karma'
+    'karma:watch'
   ]);
 
   grunt.registerTask('build', [
