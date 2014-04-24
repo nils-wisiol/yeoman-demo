@@ -32,7 +32,190 @@
         </ul>
         <h3>Restforms <small>discover REST superpowers with restforms</small></h3>
       </div>
-      <div ng-view=""></div>
+      
+      <div class="jumbotron whitebg row">
+        <h1>Restform makes life easy</h1>
+        <p class="lead">
+          Enjoy restful forms.
+        </p>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 whitebg">
+          <h3>Contents</h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="#whatis">What is restform?</a></li>
+            <li><a href="#gettingstarted">Get started</a></li>
+            <li><a href="#moreexamples">More Examples</a></li>
+          </ul>  
+        </div>
+        <div class="col-md-9">
+          <h3><a name="whatis"></a>What is restform? <small>An introduction</small></h3>
+          <p>
+            Restform is a <a href="http://angularjs.org">angularjs</a> module that
+            helps building HTML forms that get and put their data from a RESTful API.
+            Suppose you have an HTTP server that is connected to a bunch of sensors,
+            and it provides a RESTful API that allows you to see the sensor values
+            and change the settings.
+          </p>
+          <p>
+            Surely, this API would have an endpoint for each sensor, let say 
+            <code>/api/sensor/1</code>, <code>/api/sensor/2</code> and so on. If you
+            <code>GET /api/sensor/1</code>, the server would return 
+            <code>200 OK</code> and payload like
+            <pre>{
+        name: "Sensor 1",
+        value: 24.6,
+        unit: "C",
+        pollInterval: 100,
+        lastPolled: 2014-04-21T05:26:10+00:00
+      }</pre>
+            Some fields can be changed using the API, others are set by the server
+            (like <code>lastPolled</code> or <code>value</code>).
+          </p>
+          <p>
+            By using restforms, you can assign these values to HTML form fields by
+            simply writing some (extended) HTML tags and attributes. Suppose you have
+            the following code in your angularjs application template:
+            <div class="row">
+              <div class="col-md-9">
+                <pre>&lt;h5&gt;Sensor 1&lt;/h5&gt;
+      &lt;form rf-model="sensor at /api/sensor/1"&gt;
+        Name: 
+        &lt;input ng-bind="sensor.name"&gt; &lt;br/&gt;
+        
+        Value: 
+        &lt;input ng-bind="sensor.value" disabled&gt; {{'{{'}} sensor.unit }} &lt;br/&gt;
+        
+        Poll Interval: 
+        &lt;input type="number" ng-bind="sensor.pollInterval"&gt; &lt;br/&gt;
+        
+        Last Poll:
+        {{'{{'}} sensor.lastPolled }}
+        
+        &lt;button ng-click="sensor.$save()"&gt;save&lt;button&gt;
+      &lt;/form&gt;</pre>
+              </div>
+              <div class="col-md-3">
+                <div class="well">
+                  <h5>Sensor 1</h5>
+                  <form rf-model="sensor at /api/sensor/1">
+                    Name: <input ng-bind="sensor.name"> <br/>
+                    Value: <input ng-bind="sensor.value" disabled> {{ sensor.unit }} <br/>
+                    Poll Interval: <input type="number" ng-bind="sensor.pollInterval"> <br/>
+                    Last Poll: {{ sensor.lastPolled }} <br/>
+                    <button ng-click="sensor.$save()" class="btn btn-success">save</button>
+                  </form>
+                </div>        
+              </div>
+            </div>
+            Upon bootstrap of the page, the URL provided will be requests at the 
+            server and the values will be filled in. Depending on your configuration,
+            the user is allowed to change values. A click on the save button will send
+            the modified data back to the server; a task accomplished simply by adding
+            <code>ng-click="sensor.$save()"</code> to the button. If new values 
+            provided by the server in the payload of the answer to our 
+            <code>POST</code> request, the form will be updated accordingly.
+          </p>
+          <p>
+            This is only a very basic example. Restforms can be combinded with any
+            angularjs magic that is out there, so take a look at the examples section.
+          </p>
+          
+          
+          <h3><a name="gettingstarted"></a>Getting started</h3>
+          <p>
+            To understand this section, please have a look at the 
+            <a href="https://docs.angularjs.org/tutorial/">angularjs tutorial</a>
+            first.
+          </p>
+          <p>
+            Restforms is contained in it's own angularjs module, so to be able to use
+            it, make your application dependend on this module. You should have a line
+            like <pre>angular.module('myApp', []);</pre> where your <code>[]</code>
+            possible already contains some dependencies. Change it to
+            <pre>angular.module('myApp', ['restform'])</pre> Now your app is ready to
+            use the <code>rf-model</code> attribute in any template.
+          </p>
+          <h4>Have a look at the example app</h4>
+          <p>
+            If you want to see a full working example of this integration, you can
+            clone this very app to see how it is working.
+            <pre>git clone TODO</pre> <!-- TODO -->
+            You can see the code for this page in <code>app/views/main.html</code>. If
+            you are too lazy to clone, look at the source code of
+            <a href="views/main.html">this page</a>. After cloning, start 
+            <code>$ grunt serve</code> to start a HTTP server to
+            serve these files. The page will then be available at 
+            <a href="http://localhost:9000">localhost:9000</a>.
+          </p>
+          
+          
+          <h3><a name="moreexamples"></a>More Examples<h3>
+          
+          <h4>Read-Only RESTful API from jsontest.com</h4>
+          <p>
+            <a href="http://jsontest.com">jsontest.com</a> provides free and
+            read-only RESTful APIs, for example <code>http://ip.jsontest.com/</code>
+            which returns your IP address as JSON.
+          </p>
+          <p>
+            Using restforms, we can fill this into a form with just a few lines of
+            code:
+            <div class="row">
+              <div class="col-md-9">
+                <pre>&lt;h5&gt;Your IP Address&lt;/h5&gt;
+      &lt;form rf-model="data at http://ip.jsontest.com/"&gt;
+        &lt;input ng-bind="data.ip"&gt;
+        &lt;button ng-click="data.$save()" class="btn btn-success"&gt;update&lt;/button&gt;
+      &lt;/form&gt;</pre>
+              </div>
+              <div class="col-md-3">
+                <div class="well">
+                  <h5>Your IP Address</h5>
+                  <form rf-model="data at http://ip.jsontest.com/">
+                    <input ng-model="data.ip">
+                    <button ng-click="data.$save()" class="btn btn-success">update</button>
+                  </form>
+                </div>        
+              </div>
+            </div>
+            Upon clicking the update button, whatever data is in the text field will
+            be sent to the server. The server however, since it is read-only, will
+            ignore the new data and return your IP address in the response payload.
+            Hence, the form field gets updated accordingly. Be sure to check your
+            developer tools of your browser to see whats going on when you click the
+            button.
+          </p>
+          
+          <h4>A lot of sensors</h4>
+          <p>
+            What if you have a lot of sensors? As stated before, restforms can be
+            combined with all the neat tricks of angular. Have a look at this code and
+            check out the 
+            <a href="https://docs.angularjs.org/api/ng/directive/ngRepeat">documentation of ngRepeat</a>.
+            <pre>&lt;form ng-repeat="index in [1,2,3,4,5,6]" rf-model="sensor at /api/sensor/{{index}}"&gt;
+        Sensor {{'{{'}}index}}: {{'{{'}} sensor.value }}{{'{{'}} sensor.unit }},
+        Name: &lt;input ng-model="sensor.name"&gt;,
+        &lt;button ng-click="sensor.$save()"&gt;save changed name&lt;/button&gt;
+      &lt;/form&gt;</pre>
+            This little code will repeat itself to display forms for a lot of
+            different sensors:
+            <div class="well">
+              <form ng-repeat="index in [1,2,3,4,5,6]" rf-model="sensor at /api/sensor/{{index}}">
+                Sensor {{index}}: {{ sensor.value }}{{ sensor.unit }},
+                Name: <input ng-model="sensor.name">
+                <button ng-click="sensor.$save()">save changed name</button>
+              </form>
+            </div>
+          </p>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>Made with <span class="glyphicon glyphicon-heart"></span> by Nils Wisiol, &copy; 2014</p>
+      </div>      
+      
     </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
