@@ -21,7 +21,7 @@ describe('restForm', function () {
           { id: 1, name: 'two', bar: 'bar' },
         ];
 
-      var resources = [ 
+      var resources = [
           { get: function() { return models[0]; } },
           { get: function() { return models[1]; } },
         ];
@@ -33,9 +33,9 @@ describe('restForm', function () {
 
       module(function ($provide) {
           $provide.value('$resource', resourceSpy);
-      });
+        });
 
-  });  
+    });
 
   beforeEach(inject(function(_$compile_, $rootScope, _$exceptionHandler_) {
     $compile = _$compile_;
@@ -86,7 +86,7 @@ describe('restForm', function () {
     element = $compile(
       '<div rf-model="x at ' + url1 + '">' +
         '<h1>{{ x.name }}</h1>' +
-      '</div>' + 
+      '</div>' +
       '<div rf-model="x at ' + url2 + '">' +
         '<h2>{{ x.name }}</h2>' +
       '</div>')(scope);
@@ -103,12 +103,12 @@ describe('restForm', function () {
   
   it('should work well together with forms', function() {
     element = $compile(
-      '<form rf-model="x at /my/endpoint">' + 
-        '<input ng-model="x.name">' + 
+      '<form rf-model="x at /my/endpoint">' +
+        '<input ng-model="x.name">' +
         '<button ng-click="x.$save()">save</button>' +
       '</form>')(scope);
           
-    scope.$digest(); 
+    scope.$digest();
     expect(element.find('input').val()).toBe('one');
   });
   
@@ -122,17 +122,17 @@ describe('restForm', function () {
         '</div>')(scope);
       scope.$digest();
       expect($exceptionHandler.errors.length).toBeGreaterThan(0);
-      expect($exceptionHandler.errors.shift()[0].message).toMatch(/^Expected expression in form "varname at url" but got /);  
+      expect($exceptionHandler.errors.shift()[0].message).toMatch(/^Expected expression in form "varname at url" but got /);
     });
     
     it('was given an expression not containing "at"', function() {
       element = $compile(
         '<div rf-model="abc foo http://example.com/">' +
           '<p>foo</p>' +
-        '</div>')(scope);  
+        '</div>')(scope);
       scope.$digest();
       expect($exceptionHandler.errors.length).toBeGreaterThan(0);
-      expect($exceptionHandler.errors.shift()[0].message).toMatch(/^Expected expression in form "varname at url" but got /);  
+      expect($exceptionHandler.errors.shift()[0].message).toMatch(/^Expected expression in form "varname at url" but got /);
     });
   
   });
