@@ -1,10 +1,13 @@
 <div class="jumbotron">
-  <h1>Cheetah at your service</h1>
+  <h1>Cheetah using restforms</h1>
   <p class="lead">
     <img src="images/cheetah.png" alt="Cheetah at your service"><br>
-    Always a pleasure scaffolding your apps.
+    Easy restful forms.
   </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
+  <form rf-model="data at http://ip.jsontest.com/">
+    IP-Address: <input ng-model="data.ip">
+    <button ng-click="data.$save()" class="btn btn-success">save</button>
+  </form>
 </div>
 
 <div class="row marketing">

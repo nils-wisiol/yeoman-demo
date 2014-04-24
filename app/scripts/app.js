@@ -5,7 +5,8 @@ angular
     'ngCookies',
     'ngResource',
     'ngSanitize',
-    'ngRoute'
+    'ngRoute',
+    'restform'
   ])
   .config(function ($routeProvider) {
     $routeProvider
