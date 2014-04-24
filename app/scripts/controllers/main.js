@@ -2,9 +2,5 @@
 
 angular.module('wgCheetahApp')
   .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+    $scope = $scope; // nothing to do
   });
