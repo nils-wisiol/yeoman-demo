@@ -16,14 +16,19 @@ describe('restForm', function () {
   // Provide mock resource service
   beforeEach(function () {
 
-      models = [ 
+      models = [
           { id: 0, name: 'one', bar: 'bar' },
-          { id: 1, name: 'two', bar: 'bar' }
+          { id: 1, name: 'two', bar: 'bar' },
+        ];
+
+      var resources = [ 
+          { get: function() { return models[0]; } },
+          { get: function() { return models[1]; } },
         ];
 
       var index = 0;
       resourceSpy = jasmine.createSpy('resource').and.callFake(function() {
-        return models[index++ % models.length];
+        return resources[index++ % models.length];
       });
 
       module(function ($provide) {

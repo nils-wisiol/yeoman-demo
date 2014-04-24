@@ -43,7 +43,7 @@ angular.module('restform', ['ngResource'])
         varname = match[1];
         url = match[2];
         
-        scope[varname] = $resource(url);
+        scope[varname] = $resource(url).get();
       }
     };
   });
