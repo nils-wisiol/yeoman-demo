@@ -64,12 +64,12 @@
             <code>GET /api/sensor/1</code>, the server would return 
             <code>200 OK</code> and payload like
             <pre>{
-        name: "Sensor 1",
-        value: 24.6,
-        unit: "C",
-        pollInterval: 100,
-        lastPolled: 2014-04-21T05:26:10+00:00
-      }</pre>
+  name: "Sensor 1",
+  value: 24.6,
+  unit: "C",
+  pollInterval: 100,
+  lastPolled: 2014-04-21T05:26:10+00:00
+}</pre>
             Some fields can be changed using the API, others are set by the server
             (like <code>lastPolled</code> or <code>value</code>).
           </p>
@@ -80,21 +80,21 @@
             <div class="row">
               <div class="col-md-9">
                 <pre>&lt;h5&gt;Sensor 1&lt;/h5&gt;
-      &lt;form rf-model="sensor at /api/sensor/1"&gt;
-        Name: 
-        &lt;input ng-bind="sensor.name"&gt; &lt;br/&gt;
-        
-        Value: 
-        &lt;input ng-bind="sensor.value" disabled&gt; {{'{{'}} sensor.unit }} &lt;br/&gt;
-        
-        Poll Interval: 
-        &lt;input type="number" ng-bind="sensor.pollInterval"&gt; &lt;br/&gt;
-        
-        Last Poll:
-        {{'{{'}} sensor.lastPolled }}
-        
-        &lt;button ng-click="sensor.$save()"&gt;save&lt;button&gt;
-      &lt;/form&gt;</pre>
+&lt;form rf-model="sensor at /api/sensor/1"&gt;
+  Name: 
+  &lt;input ng-bind="sensor.name"&gt; &lt;br/&gt;
+  
+  Value: 
+  &lt;input ng-bind="sensor.value" disabled&gt; {{'{{'}} sensor.unit }} &lt;br/&gt;
+  
+  Poll Interval: 
+  &lt;input type="number" ng-bind="sensor.pollInterval"&gt; &lt;br/&gt;
+  
+  Last Poll:
+  {{'{{'}} sensor.lastPolled }}
+  
+  &lt;button ng-click="sensor.$save()"&gt;save&lt;button&gt;
+&lt;/form&gt;</pre>
               </div>
               <div class="col-md-3">
                 <div class="well">
@@ -165,10 +165,10 @@
             <div class="row">
               <div class="col-md-9">
                 <pre>&lt;h5&gt;Your IP Address&lt;/h5&gt;
-      &lt;form rf-model="data at http://ip.jsontest.com/"&gt;
-        &lt;input ng-bind="data.ip"&gt;
-        &lt;button ng-click="data.$save()" class="btn btn-success"&gt;update&lt;/button&gt;
-      &lt;/form&gt;</pre>
+&lt;form rf-model="data at http://ip.jsontest.com/"&gt;
+  &lt;input ng-bind="data.ip"&gt;
+  &lt;button ng-click="data.$save()" class="btn btn-success"&gt;update&lt;/button&gt;
+&lt;/form&gt;</pre>
               </div>
               <div class="col-md-3">
                 <div class="well">
@@ -195,10 +195,10 @@
             check out the 
             <a href="https://docs.angularjs.org/api/ng/directive/ngRepeat">documentation of ngRepeat</a>.
             <pre>&lt;form ng-repeat="index in [1,2,3,4,5,6]" rf-model="sensor at /api/sensor/{{index}}"&gt;
-        Sensor {{'{{'}}index}}: {{'{{'}} sensor.value }}{{'{{'}} sensor.unit }},
-        Name: &lt;input ng-model="sensor.name"&gt;,
-        &lt;button ng-click="sensor.$save()"&gt;save changed name&lt;/button&gt;
-      &lt;/form&gt;</pre>
+  Sensor {{'{{'}}index}}: {{'{{'}} sensor.value }}{{'{{'}} sensor.unit }},
+  Name: &lt;input ng-model="sensor.name"&gt;,
+  &lt;button ng-click="sensor.$save()"&gt;save changed name&lt;/button&gt;
+&lt;/form&gt;</pre>
             This little code will repeat itself to display forms for a lot of
             different sensors:
             <div class="well">
