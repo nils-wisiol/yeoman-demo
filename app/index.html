@@ -82,13 +82,13 @@
                 <pre>&lt;h5&gt;Sensor 1&lt;/h5&gt;
 &lt;form rf-model="sensor at /api/sensor/1"&gt;
   Name: 
-  &lt;input ng-bind="sensor.name"&gt; &lt;br/&gt;
+  &lt;input ng-model="sensor.name"&gt; &lt;br/&gt;
   
   Value: 
-  &lt;input ng-bind="sensor.value" disabled&gt; {{'{{'}} sensor.unit }} &lt;br/&gt;
+  &lt;input ng-model="sensor.value" disabled&gt; {{'{{'}} sensor.unit }} &lt;br/&gt;
   
   Poll Interval: 
-  &lt;input type="number" ng-bind="sensor.pollInterval"&gt; &lt;br/&gt;
+  &lt;input type="number" ng-model="sensor.pollInterval"&gt; &lt;br/&gt;
   
   Last Poll:
   {{'{{'}} sensor.lastPolled }}
@@ -100,9 +100,9 @@
                 <div class="well">
                   <h5>Sensor 1</h5>
                   <form rf-model="sensor at /api/sensor/1">
-                    Name: <input ng-bind="sensor.name"> <br/>
-                    Value: <input ng-bind="sensor.value" disabled> {{ sensor.unit }} <br/>
-                    Poll Interval: <input type="number" ng-bind="sensor.pollInterval"> <br/>
+                    Name: <input ng-model="sensor.name"> <br/>
+                    Value: <input ng-model="sensor.value" disabled> {{ sensor.unit }} <br/>
+                    Poll Interval: <input type="number" ng-model="sensor.pollInterval"> <br/>
                     Last Poll: {{ sensor.lastPolled }} <br/>
                     <button ng-click="sensor.$save()" class="btn btn-success">save</button>
                   </form>
@@ -166,7 +166,7 @@
               <div class="col-md-9">
                 <pre>&lt;h5&gt;Your IP Address&lt;/h5&gt;
 &lt;form rf-model="data at http://ip.jsontest.com/"&gt;
-  &lt;input ng-bind="data.ip"&gt;
+  &lt;input ng-model="data.ip"&gt;
   &lt;button ng-click="data.$save()" class="btn btn-success"&gt;update&lt;/button&gt;
 &lt;/form&gt;</pre>
               </div>
