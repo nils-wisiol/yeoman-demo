@@ -1,7 +1,7 @@
 'use strict';
 
 describe('restForm', function () {
-  var element, $compile, scope, $exceptionHandler, $compileProvider, resourceSpy, model;
+  var element, $compile, scope, $exceptionHandler, $compileProvider, resourceSpy, models;
   
   beforeEach(module('restform'));
 
@@ -16,9 +16,15 @@ describe('restForm', function () {
   // Provide mock resource service
   beforeEach(function () {
 
-      model = { foo: 'foo', bar: 'bar' };
+      models = [ 
+          { id: 0, name: 'one', bar: 'bar' },
+          { id: 1, name: 'two', bar: 'bar' }
+        ];
 
-      resourceSpy = jasmine.createSpy('resource').and.returnValue(model);
+      var index = 0;
+      resourceSpy = jasmine.createSpy('resource').and.callFake(function() {
+        return models[index++ % models.length];
+      });
 
       module(function ($provide) {
           $provide.value('$resource', resourceSpy);
@@ -65,7 +71,40 @@ describe('restForm', function () {
     expect(resourceSpy).toHaveBeenCalled();
     expect(resourceSpy.calls.mostRecent().args.length).toBeGreaterThan(0);
     expect(resourceSpy.calls.mostRecent().args[0]).toBe(url);
-    expect(scope.$$childHead.x).toBe(model);
+    expect(scope.$$childHead.x).toBe(models[0]);
+  });
+  
+  it('creates separate scopes for seperate instances', function() {
+    var url1 = '/api/one',
+      url2 = '/api/two';
+
+    element = $compile(
+      '<div rf-model="x at ' + url1 + '">' +
+        '<h1>{{ x.name }}</h1>' +
+      '</div>' + 
+      '<div rf-model="x at ' + url2 + '">' +
+        '<h2>{{ x.name }}</h2>' +
+      '</div>')(scope);
+          
+    scope.$digest();
+    expect(resourceSpy).toHaveBeenCalled();
+    expect(resourceSpy.calls.mostRecent().args.length).toBeGreaterThan(0);
+    expect(resourceSpy.calls.mostRecent().args[0]).toBe(url2);
+    expect(scope.$$childHead.x).toBe(models[0]);
+    expect(scope.$$childHead.$$nextSibling.x).toBe(models[1]);
+    expect(element.find('h1').text()).toBe('one');
+    expect(element.find('h2').text()).toBe('two');
+  });
+  
+  it('should work well together with forms', function() {
+    element = $compile(
+      '<form rf-model="x at /my/endpoint">' + 
+        '<input ng-model="x.name">' + 
+        '<button ng-click="x.$save()">save</button>' +
+      '</form>')(scope);
+          
+    scope.$digest(); 
+    expect(element.find('input').val()).toBe('one');
   });
   
   describe('throws errors if it', function() {
