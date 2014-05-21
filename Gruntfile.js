@@ -408,6 +408,14 @@ module.exports = function (grunt) {
     'karma:watch'
   ]);
 
+  grunt.registerTask('testonce', [
+    'clean:server',
+    'concurrent:test',
+    'autoprefixer',
+    'connect:test',
+    'karma:once'
+  ]);
+
   grunt.registerTask('build', [
     'clean:dist',
     'bowerInstall',
